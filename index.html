@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexcode Technologies — We Build Digital Experiences That Work</title>
+  <link rel="icon" type="image/png" href="assets/fevicon.png" />
+  <meta name="description" content="Nexcode Technologies — Custom web development, SaaS products, API integration, e-commerce, portfolio & business websites. Fast delivery, reasonable pricing." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0A0A0F;
+      --surface:     #111118;
+      --border:      #1E1E2E;
+      --accent:      #6C63FF;
+      --accent-glow: rgba(108,99,255,0.35);
+      --teal:        #00D4AA;
+      --teal-glow:   rgba(0,212,170,0.25);
+      --text:        #F0F0F5;
+      --muted:       #8888AA;
+      --font-display:'Plus Jakarta Sans', sans-serif;
+      --font-body:   'Inter', sans-serif;
+      --font-mono:   'JetBrains Mono', monospace;
+      --radius:      14px;
+      --transition:  0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── Light Mode ── */
+    [data-theme="light"] {
+      --bg:          #F5F5FA;
+      --surface:     #FFFFFF;
+      --border:      #E0E0EE;
+      --accent:      #5A52E0;
+      --accent-glow: rgba(90,82,224,0.22);
+      --teal:        #00B896;
+      --teal-glow:   rgba(0,184,150,0.18);
+      --text:        #111118;
+      --muted:       #5A5A7A;
+    }
+
+    [data-theme="light"] #navbar {
+      background: rgba(245,245,250,0.82);
+      border-bottom-color: var(--border);
+    }
+    [data-theme="light"] .mobile-nav {
+      background: rgba(245,245,250,0.97);
+    }
+    [data-theme="light"] .hero-badge {
+      background: rgba(90,82,224,0.08);
+    }
+    [data-theme="light"] .blob-1 { opacity: 0.3; }
+    [data-theme="light"] .blob-2 { opacity: 0.25; }
+    [data-theme="light"] .blob-3 { opacity: 0.15; }
+    [data-theme="light"] .mesh-bg::after {
+      background-image:
+        linear-gradient(rgba(90,82,224,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(90,82,224,0.07) 1px, transparent 1px);
+    }
+    [data-theme="light"] .code-card {
+      background: #FFFFFF;
+      box-shadow: 0 0 32px rgba(90,82,224,0.1), 0 20px 60px rgba(0,0,0,0.1);
+    }
+    [data-theme="light"] .code-card pre { color: #5A5A7A; }
+    [data-theme="light"] .code-card pre .kw  { color: #7C3AED; }
+    [data-theme="light"] .code-card pre .fn  { color: #2563EB; }
+    [data-theme="light"] .code-card pre .str { color: #059669; }
+    [data-theme="light"] .code-card pre .cm  { color: #9CA3AF; }
+    [data-theme="light"] .code-card pre .val { color: #DC2626; }
+    [data-theme="light"] .code-card pre .brace { color: #111118; }
+    [data-theme="light"] input,
+    [data-theme="light"] select,
+    [data-theme="light"] textarea {
+      background: #F5F5FA;
+      color: var(--text);
+    }
+    [data-theme="light"] .pricing-card { background: #FFFFFF; }
+    [data-theme="light"] .contact-link { background: #F5F5FA; }
+    [data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg); }
+
+    /* ── Theme Toggle Button ── */
+    .theme-toggle {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      background: transparent;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(108,99,255,0.08);
+    }
+    .theme-toggle svg { width: 18px; height: 18px; }
+    .theme-toggle .icon-sun  { display: none; }
+    .theme-toggle .icon-moon { display: block; }
+    [data-theme="light"] .theme-toggle .icon-sun  { display: block; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--accent); color: #fff; }
+
+    img { display: block; max-width: 100%; }
+
+    a { color: inherit; text-decoration: none; }
+
+    button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+
+    /* Focus ring */
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ── Utility ── */
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin-top: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+    .btn-primary:hover { background: #7d76ff; box-shadow: 0 0 36px var(--accent-glow); transform: translateY(-2px); }
+    .btn-ghost {
+      border: 1.5px solid var(--border);
+      color: var(--text);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── Scroll Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ════════════════════════════════════════
+       NAVBAR
+    ════════════════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(10,10,15,0.72);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.35s ease;
+    }
+    #navbar.nav-scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.4); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-logo-img {
+      height: 42px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+      transition: width var(--transition);
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    .nav-cta { padding: 9px 20px; font-size: 0.88rem; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px;
+      border-radius: 6px;
+      transition: background var(--transition);
+    }
+    .hamburger:hover { background: var(--surface); }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 999px;
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 24px;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 899;
+      transform: translateY(-110%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-nav.open { transform: translateY(0); }
+    .mobile-nav a {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color var(--transition);
+    }
+    .mobile-nav a:hover { color: var(--accent); }
+    .mobile-nav .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+    }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding-top: 68px;
+    }
+
+    /* Gradient mesh blobs */
+    .mesh-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.55;
+      animation: blobFloat 14s ease-in-out infinite;
+    }
+    .blob-1 {
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, #6C63FF 0%, transparent 70%);
+      top: -120px; left: -80px;
+      animation-delay: 0s;
+    }
+    .blob-2 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, #00D4AA 0%, transparent 70%);
+      bottom: -80px; right: -60px;
+      animation-delay: -7s;
+    }
+    .blob-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #6C63FF 0%, transparent 70%);
+      top: 50%; right: 25%;
+      opacity: 0.3;
+      animation-delay: -3.5s;
+      animation-duration: 18s;
+    }
+    @keyframes blobFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(30px, -40px) scale(1.06); }
+      66%       { transform: translate(-20px, 30px) scale(0.95); }
+    }
+
+    /* Grid overlay */
+    .mesh-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(30,30,46,0.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,30,46,0.18) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .hero-content { max-width: 620px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.1s forwards;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: pulse-dot 2s ease infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.25s forwards;
+    }
+    .hero-h1 .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.6s forwards;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.75s forwards;
+    }
+    .stat { display: flex; flex-direction: column; gap: 2px; }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* Floating code card */
+    .code-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      min-width: 300px;
+      max-width: 340px;
+      box-shadow: 0 0 40px rgba(108,99,255,0.15), 0 20px 60px rgba(0,0,0,0.5);
+      position: relative;
+      flex-shrink: 0;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.9s forwards;
+    }
+    .code-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: calc(var(--radius) + 1px);
+      background: linear-gradient(135deg, var(--accent), var(--teal));
+      z-index: -1;
+      opacity: 0.6;
+    }
+    .code-card-dots { display: flex; gap: 6px; margin-bottom: 16px; }
+    .code-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .code-dot:nth-child(1) { background: #FF5F57; }
+    .code-dot:nth-child(2) { background: #FFBD2E; }
+    .code-dot:nth-child(3) { background: #28CA41; }
+    .code-card pre {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      line-height: 1.75;
+      color: var(--muted);
+      overflow: hidden;
+    }
+    .code-card pre .kw  { color: #C792EA; }
+    .code-card pre .fn  { color: #82AAFF; }
+    .code-card pre .str { color: #C3E88D; }
+    .code-card pre .cm  { color: #546E7A; font-style: italic; }
+    .code-card pre .val { color: #F78C6C; }
+    .code-card pre .brace { color: var(--text); }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .code-card { display: none; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { gap: 24px; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { justify-content: center; }
+    }
+
+    /* ════════════════════════════════════════
+       SERVICES
+    ════════════════════════════════════════ */
+    #services { padding: 100px 0; }
+
+    .services-header { text-align: center; margin-bottom: 60px; }
+    .services-header .section-sub { margin: 12px auto 0; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .services-grid { grid-template-columns: 1fr; } }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--accent-glow), transparent 60%);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 0 32px var(--accent-glow);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      background: rgba(108,99,255,0.12);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      transition: background var(--transition);
+    }
+    .service-card:hover .service-icon { background: rgba(108,99,255,0.22); }
+    .service-icon svg { width: 24px; height: 24px; color: var(--accent); }
+
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .service-desc { font-size: 0.9rem; color: var(--muted); }
+
+    /* ════════════════════════════════════════
+       PROCESS
+    ════════════════════════════════════════ */
+    #process {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .process-header { text-align: center; margin-bottom: 64px; }
+
+    .steps {
+      display: flex;
+      gap: 0;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 28px; left: calc(12.5% + 28px); right: calc(12.5% + 28px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      opacity: 0.4;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+    }
+    .step-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+      transition: var(--transition);
+    }
+    .step:hover .step-num {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .step-desc { font-size: 0.875rem; color: var(--muted); }
+
+    @media (max-width: 768px) {
+      .steps { flex-direction: column; gap: 40px; }
+      .steps::before { display: none; }
+      .step { text-align: left; display: flex; gap: 20px; padding: 0; align-items: flex-start; }
+      .step-num { flex-shrink: 0; margin: 0; }
+
+    }
+
+    /* ════════════════════════════════════════
+       PORTFOLIO
+    ════════════════════════════════════════ */
+    #work { padding: 100px 0; }
+    .work-header { text-align: center; margin-bottom: 60px; }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .work-grid { grid-template-columns: 1fr; } }
+
+    .work-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: var(--transition);
+    }
+    .work-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+
+    .work-thumb {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .work-thumb-bg {
+      width: 100%; height: 100%;
+      transition: transform 0.5s ease;
+    }
+    .work-card:hover .work-thumb-bg { transform: scale(1.05); }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,15,0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .work-card:hover .work-overlay { opacity: 1; }
+    .work-overlay-link {
+      padding: 10px 22px;
+      border: 1.5px solid var(--accent);
+      border-radius: 8px;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex; align-items: center; gap: 6px;
+      transition: var(--transition);
+    }
+    .work-overlay-link:hover { background: var(--accent); color: #fff; }
+
+    /* ── Project Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 860px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .modal-backdrop.open .modal {
+      transform: none;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .modal-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-left: 10px;
+    }
+    .modal-close {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .modal-close:hover { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,0.08); }
+    .modal-close svg { width: 16px; height: 16px; }
+    .modal-img-wrap {
+      width: 100%;
+      max-height: 520px;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-img-wrap img {
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      object-fit: contain;
+      display: block;
+    }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .work-thumb-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px 20px 16px;
+      background: linear-gradient(transparent, rgba(10,10,15,0.95));
+    }
+    .work-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+
+    .work-body { padding: 20px; }
+    .work-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .work-desc { font-size: 0.875rem; color: var(--muted); }
+
+    /* ════════════════════════════════════════
+       PRICING
+    ════════════════════════════════════════ */
+    #pricing {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .pricing-header { text-align: center; margin-bottom: 60px; }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      position: relative;
+      transition: var(--transition);
+    }
+    .pricing-card:hover { transform: translateY(-4px); }
+    .pricing-card.popular {
+      border-color: var(--accent);
+      box-shadow: 0 0 48px var(--accent-glow);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .pricing-tier {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .pricing-price {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+    .pricing-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 28px; }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .pricing-features li .check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(0,212,170,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .pricing-features li .check svg { width: 10px; height: 10px; color: var(--teal); }
+
+    .pricing-cta { width: 100%; justify-content: center; }
+    .pricing-card.popular .pricing-cta { background: var(--accent); color: #fff; box-shadow: 0 0 24px var(--accent-glow); }
+    .pricing-card.popular .pricing-cta:hover { background: #7d76ff; }
+
+    /* ════════════════════════════════════════
+       TESTIMONIALS
+    ════════════════════════════════════════ */
+    #testimonials { padding: 100px 0; }
+    .testimonials-header { text-align: center; margin-bottom: 60px; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; } }
+
+    .testimonial-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      position: relative;
+      transition: var(--transition);
+    }
+    .testimonial-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .testimonial-quote {
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 16px;
+      font-family: Georgia, serif;
+    }
+    .testimonial-text {
+      font-size: 0.925rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .testimonial-stars { display: flex; gap: 3px; margin-bottom: 16px; }
+    .star-icon { color: #FFB800; font-size: 0.9rem; }
+
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .author-name { font-weight: 600; font-size: 0.9rem; }
+    .author-role { font-size: 0.8rem; color: var(--muted); }
+
+    /* ════════════════════════════════════════
+       CONTACT
+    ════════════════════════════════════════ */
+    #contact {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 768px) { .contact-inner { grid-template-columns: 1fr; gap: 48px; } }
+
+    .contact-info .section-title { margin-bottom: 16px; }
+    .contact-info .section-sub { margin-bottom: 40px; }
+
+    .contact-links { display: flex; flex-direction: column; gap: 16px; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateX(4px); }
+    .contact-link-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-link-icon svg { width: 20px; height: 20px; }
+    .contact-link-text { display: flex; flex-direction: column; gap: 1px; }
+    .contact-link-label { font-size: 0.75rem; color: var(--muted); }
+    .contact-link-value { font-weight: 500; }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
+
+    label { font-size: 0.82rem; font-weight: 500; color: var(--muted); }
+    input, select, textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: var(--transition);
+      width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: #555566; }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    select { appearance: none; cursor: pointer; }
+    select option { background: var(--surface); }
+    textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit { padding: 14px 28px; font-size: 0.95rem; width: 100%; justify-content: center; }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 32px;
+      background: rgba(0,212,170,0.07);
+      border: 1px solid rgba(0,212,170,0.3);
+      border-radius: var(--radius);
+    }
+    .form-success.show { display: block; }
+    .success-icon {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(0,212,170,0.15);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .success-icon svg { width: 28px; height: 28px; color: var(--teal); }
+    .success-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+    .success-msg { font-size: 0.9rem; color: var(--muted); }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer {
+      padding: 60px 0 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr; gap: 36px; } }
+
+    .footer-logo {
+      display: flex; align-items: center;
+      margin-bottom: 12px;
+    }
+    .footer-tagline { font-size: 0.875rem; color: var(--muted); margin-bottom: 24px; max-width: 280px; }
+    .footer-copyright { font-size: 0.8rem; color: #555566; }
+
+    .footer-links-col h4 {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 0.875rem; color: var(--muted); transition: color var(--transition); }
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-socials { display: flex; gap: 12px; margin-top: 20px; }
+    .social-btn {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      transition: var(--transition);
+    }
+    .social-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(108,99,255,0.08); }
+    .social-btn svg { width: 18px; height: 18px; }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-bottom span {
+      font-size: 0.8rem;
+      color: #555566;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .footer-bottom span::before { content: '·'; display: none; }
+
+    /* ════════════════════════════════════════
+       FLOATING WHATSAPP
+    ════════════════════════════════════════ */
+    .wa-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 9999;
+    }
+    .wa-btn {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+    }
+    .wa-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.6); }
+    .wa-btn svg { width: 28px; height: 28px; fill: #fff; }
+
+    .wa-pulse {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid #25D366;
+      animation: waPulse 2s ease-out infinite;
+    }
+    @keyframes waPulse {
+      0%   { transform: scale(0.9); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .wa-tooltip {
+      position: absolute;
+      right: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .wa-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%; top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-left-color: var(--border);
+    }
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    /* ════════════════════════════════════════
+       DIVIDER
+    ════════════════════════════════════════ */
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      border-radius: 999px;
+      margin: 16px auto 0;
+    }
+    .section-divider.left { margin-left: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ NAVBAR ══════════════════ -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo" aria-label="Nexcode Technologies home">
+      <img src="assets/navbar logo.png" alt="Nexcode Technologies" class="nav-logo-img" />
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+        <!-- Moon icon (shown in dark mode) -->
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <!-- Sun icon (shown in light mode) -->
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="#contact" class="btn btn-primary nav-cta" aria-label="Get a project quote">Get a Quote</a>
+    </div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation">
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#work" class="mobile-link">Work</a>
+  <a href="#pricing" class="mobile-link">Pricing</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="#contact" class="btn btn-primary">Get a Quote</a>
+</div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section id="hero" aria-label="Hero section">
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="hero-badge">
+        <span class="hero-badge-dot" aria-hidden="true"></span>
+        Available for new projects
+      </span>
+
+      <h1 class="hero-h1">
+        We Build Websites That<br>
+        <span class="accent">Drive Results</span>
+      </h1>
+
+      <p class="hero-sub">
+        From SaaS platforms to e-commerce stores — clean code, fast delivery, reasonable pricing.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">
+          Start a Project
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#work" class="btn btn-ghost">View Our Work</a>
+      </div>
+
+      <div class="hero-stats" role="list">
+        <div class="stat" role="listitem">
+          <span class="stat-value">20+</span>
+          <span class="stat-label">Projects Delivered</span>
+        </div>
+        <div class="stat" role="listitem">
+          <span class="stat-value">5★</span>
+          <span class="stat-label">Client Rating</span>
+        </div>
+        <div class="stat" role="listitem">
+          <span class="stat-value">48hr</span>
+          <span class="stat-label">Turnaround</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-card" aria-hidden="true" role="presentation">
+      <div class="code-card-dots">
+        <span class="code-dot"></span>
+        <span class="code-dot"></span>
+        <span class="code-dot"></span>
+      </div>
+      <pre><code><span class="cm">// nexcode · project init</span>
+<span class="kw">const</span> <span class="fn">launch</span> <span class="brace">= async (</span><span class="val">config</span><span class="brace">)</span> <span class="brace">=></span> <span class="brace">{</span>
+  <span class="kw">const</span> site <span class="brace">=</span> <span class="kw">await</span> <span class="fn">build</span><span class="brace">({</span>
+    stack<span class="brace">:</span>  <span class="str">'modern'</span><span class="brace">,</span>
+    speed<span class="brace">:</span>  <span class="str">'fast'</span><span class="brace">,</span>
+    design<span class="brace">:</span> <span class="str">'pixel-perfect'</span><span class="brace">,</span>
+  <span class="brace">});</span>
+  <span class="kw">await</span> <span class="fn">deploy</span><span class="brace">(</span>site<span class="brace">);</span>
+  <span class="kw">return</span> <span class="brace">{</span> success<span class="brace">:</span> <span class="val">true</span> <span class="brace">};</span>
+<span class="brace">};</span>
+
+<span class="fn">launch</span><span class="brace">({</span> client<span class="brace">:</span> <span class="str">'you'</span> <span class="brace">});</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SERVICES ══════════════════ -->
+<section id="services" aria-labelledby="services-title">
+  <div class="container">
+    <div class="services-header reveal">
+      <span class="section-label">What We Build</span>
+      <h2 class="section-title" id="services-title">Services Built For Growth</h2>
+      <div class="section-divider"></div>
+      <p class="section-sub">Every service is delivered with clean code, thoughtful design, and a focus on real business outcomes.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- Web Development -->
+      <article class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9l-2 3 2 3M15 9l2 3-2 3M12 8v8"/></svg>
+        </div>
+        <h3 class="service-name">Web Development</h3>
+        <p class="service-desc">Custom websites built fast and clean. Performance-first, responsive by default.</p>
+      </article>
+
+      <!-- SaaS -->
+      <article class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M12 12v4M10 14h4"/></svg>
+        </div>
+        <h3 class="service-name">SaaS Applications</h3>
+        <p class="service-desc">Full-featured software products, end to end. From MVP to production-ready.</p>
+      </article>
+
+      <!-- API Integration -->
+      <article class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3 class="service-name">API Integration</h3>
+        <p class="service-desc">Connect any tool, service, or data source. Payment gateways, CRMs, analytics — all of it.</p>
+      </article>
+
+      <!-- E-Commerce -->
+      <article class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <h3 class="service-name">E-Commerce Stores</h3>
+        <p class="service-desc">Sell online with a smooth buying experience. Fast checkout, secure payments, clean UI.</p>
+      </article>
+
+      <!-- Portfolio -->
+      <article class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3 class="service-name">Portfolio Sites</h3>
+        <p class="service-desc">Personal sites that make you unforgettable. Stand out and land more opportunities.</p>
+      </article>
+
+      <!-- Business -->
+      <article class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3 class="service-name">Business Websites</h3>
+        <p class="service-desc">Professional presence for serious brands. Convert visitors into clients.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ PROCESS ══════════════════ -->
+<section id="process" aria-labelledby="process-title">
+  <div class="container">
+    <div class="process-header reveal">
+      <span class="section-label">Our Workflow</span>
+      <h2 class="section-title" id="process-title">How We Work</h2>
+      <div class="section-divider"></div>
+      <p class="section-sub" style="margin: 12px auto 0;">A clear, collaborative process from first call to launch day.</p>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num" aria-hidden="true">01</div>
+        <div class="step-body">
+          <h3 class="step-title">Discovery</h3>
+          <p class="step-desc">We understand your goals, audience, and technical requirements before writing a single line.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" aria-hidden="true">02</div>
+        <div class="step-body">
+          <h3 class="step-title">Design</h3>
+          <p class="step-desc">Wireframes and UI mockups before any code. You see it and approve it first.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" aria-hidden="true">03</div>
+        <div class="step-body">
+          <h3 class="step-title">Build</h3>
+          <p class="step-desc">Fast, clean, tested development with regular updates and previews throughout.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num" aria-hidden="true">04</div>
+        <div class="step-body">
+          <h3 class="step-title">Launch</h3>
+          <p class="step-desc">Deployment, handoff, and ongoing support. We don't disappear after going live.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ WORK ══════════════════ -->
+<section id="work" aria-labelledby="work-title">
+  <div class="container">
+    <div class="work-header reveal">
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title" id="work-title">Recent Work</h2>
+      <div class="section-divider"></div>
+      <p class="section-sub" style="margin: 12px auto 0;">A few projects we're proud of. Every site is built from scratch — no templates.</p>
+    </div>
+
+    <div class="work-grid">
+
+      <!-- Project 1 -->
+      <article class="work-card reveal">
+        <div class="work-thumb">
+          <div class="work-thumb-bg" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);">
+            <svg width="100%" height="100%" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect x="20" y="30" width="100" height="12" rx="6" fill="#6C63FF" opacity="0.6"/>
+              <rect x="20" y="52" width="160" height="8" rx="4" fill="#8888AA" opacity="0.4"/>
+              <rect x="20" y="70" width="120" height="8" rx="4" fill="#8888AA" opacity="0.3"/>
+              <rect x="20" y="100" width="80" height="32" rx="6" fill="#6C63FF" opacity="0.5"/>
+              <rect x="220" y="20" width="160" height="180" rx="10" fill="#0A0A0F" opacity="0.7"/>
+              <rect x="235" y="36" width="130" height="80" rx="6" fill="#1E1E2E" opacity="0.8"/>
+              <rect x="244" y="46" width="110" height="8" rx="4" fill="#6C63FF" opacity="0.5"/>
+              <rect x="244" y="62" width="80" height="6" rx="3" fill="#8888AA" opacity="0.4"/>
+              <rect x="244" y="76" width="95" height="6" rx="3" fill="#8888AA" opacity="0.3"/>
+              <rect x="235" y="130" width="60" height="50" rx="6" fill="#1E1E2E" opacity="0.8"/>
+              <rect x="303" y="130" width="57" height="50" rx="6" fill="#1E1E2E" opacity="0.8"/>
+              <rect x="244" y="140" width="40" height="6" rx="3" fill="#00D4AA" opacity="0.5"/>
+              <rect x="311" y="140" width="40" height="6" rx="3" fill="#6C63FF" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="work-thumb-label">
+            <span class="work-tag" style="background:rgba(108,99,255,0.2);color:var(--accent);border:1px solid rgba(108,99,255,0.3);">E-Commerce</span>
+          </div>
+          <div class="work-overlay">
+            <button class="work-overlay-link" aria-label="View ShopForward project" data-modal-img="assets/ecommerce.png" data-modal-title="ShopForward" data-modal-tag="E-Commerce" data-modal-tag-style="background:rgba(108,99,255,0.2);color:#6C63FF;border:1px solid rgba(108,99,255,0.3)" data-modal-desc="A full e-commerce store with inventory management, Razorpay integration, and admin dashboard.">
+              View Project
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="work-body">
+          <h3 class="work-title">ShopForward</h3>
+          <p class="work-desc">A full e-commerce store with inventory management, Razorpay integration, and admin dashboard.</p>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="work-card reveal">
+        <div class="work-thumb">
+          <div class="work-thumb-bg" style="background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #0a2540 100%);">
+            <svg width="100%" height="100%" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect x="16" y="16" width="368" height="188" rx="10" fill="#0A0A0F" opacity="0.6"/>
+              <rect x="16" y="16" width="80" height="188" rx="10" fill="#111118" opacity="0.9"/>
+              <rect x="28" y="32" width="56" height="8" rx="4" fill="#6C63FF" opacity="0.6"/>
+              <rect x="28" y="52" width="56" height="6" rx="3" fill="#8888AA" opacity="0.35"/>
+              <rect x="28" y="66" width="56" height="6" rx="3" fill="#8888AA" opacity="0.25"/>
+              <rect x="28" y="80" width="56" height="6" rx="3" fill="#8888AA" opacity="0.25"/>
+              <rect x="110" y="20" width="260" height="80" rx="8" fill="#1E1E2E" opacity="0.9"/>
+              <rect x="122" y="34" width="80" height="6" rx="3" fill="#00D4AA" opacity="0.5"/>
+              <rect x="122" y="48" width="220" height="4" rx="2" fill="#6C63FF" opacity="0.4"/>
+              <rect x="122" y="56" width="170" height="4" rx="2" fill="#6C63FF" opacity="0.25"/>
+              <rect x="110" y="115" width="124" height="78" rx="8" fill="#1E1E2E" opacity="0.9"/>
+              <rect x="246" y="115" width="124" height="78" rx="8" fill="#1E1E2E" opacity="0.9"/>
+              <rect x="122" y="130" width="60" height="6" rx="3" fill="#8888AA" opacity="0.4"/>
+              <rect x="122" y="144" width="90" height="20" rx="4" fill="#6C63FF" opacity="0.3"/>
+              <rect x="258" y="130" width="60" height="6" rx="3" fill="#8888AA" opacity="0.4"/>
+              <rect x="258" y="144" width="90" height="20" rx="4" fill="#00D4AA" opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="work-thumb-label">
+            <span class="work-tag" style="background:rgba(0,212,170,0.15);color:var(--teal);border:1px solid rgba(0,212,170,0.3);">SaaS Dashboard</span>
+          </div>
+          <div class="work-overlay">
+            <button class="work-overlay-link" aria-label="View Metrik Analytics project" data-modal-img="assets/dashboard.png" data-modal-title="Metrik Analytics" data-modal-tag="SaaS Dashboard" data-modal-tag-style="background:rgba(0,212,170,0.15);color:#00D4AA;border:1px solid rgba(0,212,170,0.3)" data-modal-desc="A SaaS analytics dashboard with real-time data visualization, role-based access, and REST API.">
+              View Project
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="work-body">
+          <h3 class="work-title">Metrik Analytics</h3>
+          <p class="work-desc">A SaaS analytics dashboard with real-time data visualization, role-based access, and REST API.</p>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="work-card reveal">
+        <div class="work-thumb">
+          <div class="work-thumb-bg" style="background: linear-gradient(135deg, #0e0e1a 0%, #14142a 50%, #1a0e2e 100%);">
+            <svg width="100%" height="100%" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect x="16" y="16" width="368" height="40" rx="8" fill="#111118" opacity="0.9"/>
+              <circle cx="32" cy="36" r="5" fill="#6C63FF" opacity="0.7"/>
+              <rect x="45" y="32" width="60" height="8" rx="4" fill="#F0F0F5" opacity="0.6"/>
+              <rect x="290" y="28" width="80" height="16" rx="4" fill="#6C63FF" opacity="0.5"/>
+              <rect x="16" y="72" width="180" height="130" rx="8" fill="#111118" opacity="0.9"/>
+              <rect x="28" y="86" width="80" height="80" rx="6" fill="#1E1E2E" opacity="0.9"/>
+              <rect x="120" y="86" width="64" height="36" rx="6" fill="#1E1E2E" opacity="0.7"/>
+              <rect x="120" y="130" width="64" height="60" rx="6" fill="#6C63FF" opacity="0.2"/>
+              <rect x="34" y="96" width="60" height="6" rx="3" fill="#6C63FF" opacity="0.5"/>
+              <rect x="34" y="110" width="45" height="6" rx="3" fill="#8888AA" opacity="0.4"/>
+              <rect x="34" y="124" width="55" height="6" rx="3" fill="#8888AA" opacity="0.3"/>
+              <rect x="210" y="72" width="174" height="130" rx="8" fill="#111118" opacity="0.9"/>
+              <rect x="222" y="86" width="150" height="8" rx="4" fill="#F0F0F5" opacity="0.5"/>
+              <rect x="222" y="102" width="120" height="6" rx="3" fill="#8888AA" opacity="0.35"/>
+              <rect x="222" y="116" width="130" height="6" rx="3" fill="#8888AA" opacity="0.25"/>
+              <rect x="222" y="148" width="70" height="22" rx="6" fill="#6C63FF" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="work-thumb-label">
+            <span class="work-tag" style="background:rgba(255,184,0,0.12);color:#FFB800;border:1px solid rgba(255,184,0,0.3);">Business Site</span>
+          </div>
+          <div class="work-overlay">
+            <button class="work-overlay-link" aria-label="View Elevate Consulting project" data-modal-img="assets/Consulting.png" data-modal-title="Elevate Consulting" data-modal-tag="Business Site" data-modal-tag-style="background:rgba(255,184,0,0.12);color:#FFB800;border:1px solid rgba(255,184,0,0.3)" data-modal-desc="A professional business website with lead capture, service showcase, and case studies section.">
+              View Project
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="work-body">
+          <h3 class="work-title">Elevate Consulting</h3>
+          <p class="work-desc">A professional business website with lead capture, service showcase, and case studies section.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ PRICING ══════════════════ -->
+<section id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="pricing-header reveal">
+      <span class="section-label">Pricing</span>
+      <h2 class="section-title" id="pricing-title">Simple, Honest Pricing</h2>
+      <div class="section-divider"></div>
+      <p class="section-sub" style="margin: 12px auto 0;">No hidden fees. No surprise invoices. Pay for exactly what you need.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- Starter -->
+      <div class="pricing-card reveal">
+        <p class="pricing-tier">Starter</p>
+        <p class="pricing-price">₹8,999</p>
+        <p class="pricing-sub">Portfolio or business website</p>
+        <ul class="pricing-features">
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Up to 5 pages
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Mobile responsive design
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Contact form integration
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            SEO basics included
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            7-day delivery
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost pricing-cta">Get Started</a>
+      </div>
+
+      <!-- Growth (Popular) -->
+      <div class="pricing-card popular reveal">
+        <span class="popular-badge">Most Popular</span>
+        <p class="pricing-tier">Growth</p>
+        <p class="pricing-price">₹24,999</p>
+        <p class="pricing-sub">E-Commerce or SaaS MVP</p>
+        <ul class="pricing-features">
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Unlimited pages
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Payment gateway integration
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Admin dashboard
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            API integrations (up to 3)
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            30-day post-launch support
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            14-day delivery
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-primary pricing-cta">Get Started</a>
+      </div>
+
+      <!-- Custom -->
+      <div class="pricing-card reveal">
+        <p class="pricing-tier">Custom</p>
+        <p class="pricing-price" style="font-size: 2rem;">Let's Talk</p>
+        <p class="pricing-sub">Large or complex projects</p>
+        <ul class="pricing-features">
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Fully custom architecture
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Multi-platform delivery
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Dedicated project manager
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Unlimited API integrations
+          </li>
+          <li>
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l2 2 4-4"/></svg>
+            </span>
+            Ongoing retainer available
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost pricing-cta">Contact Us</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ TESTIMONIALS ══════════════════ -->
+<section id="testimonials" aria-labelledby="testimonials-title">
+  <div class="container">
+    <div class="testimonials-header reveal">
+      <span class="section-label">Client Stories</span>
+      <h2 class="section-title" id="testimonials-title">What Clients Say</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <article class="testimonial-card reveal">
+        <div class="testimonial-quote" aria-hidden="true">"</div>
+        <p class="testimonial-text">Nexcode built our e-commerce store in under two weeks. The attention to detail — from the product filters to the checkout flow — was exactly what we needed. Sales increased 40% in the first month.</p>
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #6C63FF, #00D4AA);" aria-hidden="true">RS</div>
+          <div>
+            <p class="author-name">Riya Sharma</p>
+            <p class="author-role">Founder, CraftNest India</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card reveal">
+        <div class="testimonial-quote" aria-hidden="true">"</div>
+        <p class="testimonial-text">We needed a SaaS dashboard fast. Nexcode delivered a clean, functional MVP with an API I could actually work with. Communication was excellent throughout — they understood the brief on the first call.</p>
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #FF6B6B, #6C63FF);" aria-hidden="true">AK</div>
+          <div>
+            <p class="author-name">Arjun Kapoor</p>
+            <p class="author-role">CTO, FlowTrack Labs</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card reveal">
+        <div class="testimonial-quote" aria-hidden="true">"</div>
+        <p class="testimonial-text">My portfolio website is something I'm genuinely proud to share. It loads incredibly fast, looks stunning on mobile, and has already helped me land two freelance clients in the first month after launch.</p>
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+          <span class="star-icon" aria-hidden="true">★</span>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background: linear-gradient(135deg, #00D4AA, #0077FF);" aria-hidden="true">PM</div>
+          <div>
+            <p class="author-name">Priya Mehta</p>
+            <p class="author-role">UX Designer &amp; Freelancer</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTACT ══════════════════ -->
+<section id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="contact-inner">
+
+      <div class="contact-info reveal">
+        <span class="section-label">Get In Touch</span>
+        <h2 class="section-title" id="contact-title">Let's Build Something</h2>
+        <div class="section-divider left"></div>
+        <p class="section-sub">Tell us about your project and we'll get back to you within 24 hours. No pressure, no commitment.</p>
+
+        <div class="contact-links" style="margin-top: 40px;">
+          <a href="mailto:hello@nexcodetech.com" class="contact-link" aria-label="Send us an email">
+            <span class="contact-link-icon" style="background:rgba(108,99,255,0.12);" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#6C63FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <span class="contact-link-text">
+              <span class="contact-link-label">Email us</span>
+              <span class="contact-link-value">nexcodet@gmail.com</span>
+            </span>
+          </a>
+
+          <a href="https://wa.me/918100046648?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Message us on WhatsApp">
+            <span class="contact-link-icon" style="background:rgba(37,211,102,0.1);" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </span>
+            <span class="contact-link-text">
+              <span class="contact-link-label">WhatsApp</span>
+              <span class="contact-link-value">+91 81000 46648</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form class="contact-form" id="contactForm" novalidate aria-label="Project inquiry form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Your Name <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+              <input type="text" id="fname" name="name" placeholder="Riya Sharma" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="femail">Email Address <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+              <input type="email" id="femail" name="email" placeholder="riya@example.com" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="ftype">Project Type <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <select id="ftype" name="project_type" required>
+              <option value="" disabled selected>Select a service...</option>
+              <option value="web">Web Development</option>
+              <option value="saas">SaaS Application</option>
+              <option value="api">API Integration</option>
+              <option value="ecommerce">E-Commerce Store</option>
+              <option value="portfolio">Portfolio Site</option>
+              <option value="business">Business Website</option>
+              <option value="other">Other / Not Sure</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="fmsg">Tell us about your project <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+            <textarea id="fmsg" name="message" placeholder="What are you building? What's your timeline? Any specific features or integrations you need?" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit" id="submitBtn">
+            Send Message
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+
+        <div class="form-success" id="formSuccess" role="alert" aria-live="polite">
+          <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l5 5 11-11"/></svg>
+          </div>
+          <h3 class="success-title">Message Received!</h3>
+          <p class="success-msg">Thanks for reaching out. We'll review your project details and get back to you within 24 hours.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer aria-label="Site footer">
+  <div class="container">
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/navbar logo.png" alt="Nexcode Technologies" style="height:38px;width:auto;object-fit:contain;" />
+        </div>
+        <p class="footer-tagline">We Build Digital Experiences That Work — professional web development for startups and growing businesses.</p>
+        <p class="footer-copyright">&copy; <span id="footerYear"></span> Nexcode Technologies. All rights reserved.</p>
+
+        <div class="footer-socials" style="margin-top:20px;">
+          <a href="#" class="social-btn" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/nexcode-technologies/" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://wa.me/918100046648?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:60px;flex-wrap:wrap;">
+        <div class="footer-links-col">
+          <h4>Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Web Development</a></li>
+            <li><a href="#services">SaaS Applications</a></li>
+            <li><a href="#services">API Integration</a></li>
+            <li><a href="#services">E-Commerce</a></li>
+            <li><a href="#services">Portfolio Sites</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#work">Our Work</a></li>
+            <li><a href="#process">How We Work</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>Built with passion</span>
+      <span style="color:var(--border)">·</span>
+      <span>Reasonable pricing</span>
+      <span style="color:var(--border)">·</span>
+      <span>Fast delivery</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════ PROJECT MODAL ══════════════════ -->
+<div class="modal-backdrop" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:0;">
+        <span class="modal-title" id="modalTitle"></span>
+        <span class="modal-tag" id="modalTag"></span>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close project preview">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg>
+      </button>
+    </div>
+    <div class="modal-img-wrap">
+      <img id="modalImg" src="" alt="" />
+    </div>
+    <div class="modal-footer" id="modalDesc"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ FLOATING WHATSAPP ══════════════════ -->
+<div class="wa-float">
+  <a
+    href="https://wa.me/918100046648?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="wa-btn"
+    aria-label="Chat with us on WhatsApp"
+  >
+    <span class="wa-pulse" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+  <span class="wa-tooltip" aria-hidden="true">Chat on WhatsApp</span>
+</div>
+
+<!-- ══════════════════ JAVASCRIPT ══════════════════ -->
+<script>
+  'use strict';
+
+  // ── Footer Year ──
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+  // ── Reduce motion check ──
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Navbar: hide on scroll down, show on scroll up ──
+  (function () {
+    const navbar = document.getElementById('navbar');
+    let ticking = false;
+
+    function onScroll() {
+      navbar.classList.toggle('nav-scrolled', window.scrollY > 20);
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
+  // ── Hamburger / Mobile Nav ──
+  (function () {
+    const btn    = document.getElementById('hamburgerBtn');
+    const mNav   = document.getElementById('mobileNav');
+    const mLinks = mNav.querySelectorAll('a');
+
+    function closeMenu() {
+      btn.classList.remove('open');
+      mNav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('click', function () {
+      const isOpen = btn.classList.toggle('open');
+      mNav.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    mLinks.forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!btn.contains(e.target) && !mNav.contains(e.target)) {
+        closeMenu();
+      }
+    });
+  })();
+
+  // ── Active nav link on scroll ──
+  (function () {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    if (!navLinks.length) return;
+
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(function (link) {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(function (sec) { io.observe(sec); });
+  })();
+
+  // ── Scroll Reveal ──
+  (function () {
+    if (prefersReducedMotion) {
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        el.classList.add('visible');
+      });
+      return;
+    }
+
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Stagger children in grids
+    function staggerReveal(items) {
+      items.forEach(function (el, i) {
+        el.style.transitionDelay = (i * 0.1) + 's';
+      });
+    }
+
+    var grids = [
+      document.querySelectorAll('.services-grid .service-card'),
+      document.querySelectorAll('.work-grid .work-card'),
+      document.querySelectorAll('.pricing-grid .pricing-card'),
+      document.querySelectorAll('.testimonials-grid .testimonial-card'),
+    ];
+    grids.forEach(staggerReveal);
+
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      io.observe(el);
+    });
+  })();
+
+  // ── Contact Form ──
+  (function () {
+    var form    = document.getElementById('contactForm');
+    var success = document.getElementById('formSuccess');
+    var btn     = document.getElementById('submitBtn');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Basic validation
+      var name    = form.elements['name'].value.trim();
+      var email   = form.elements['email'].value.trim();
+      var type    = form.elements['project_type'].value;
+      var message = form.elements['message'].value.trim();
+
+      if (!name || !email || !type || !message) {
+        // Highlight empty fields
+        [form.elements['name'], form.elements['email'], form.elements['project_type'], form.elements['message']].forEach(function (field) {
+          if (!field.value.trim()) {
+            field.style.borderColor = '#FF6B6B';
+            field.addEventListener('input', function () {
+              field.style.borderColor = '';
+            }, { once: true });
+          }
+        });
+        return;
+      }
+
+      btn.innerHTML = 'Sending…';
+      btn.disabled = true;
+
+      fetch('https://formspree.io/f/mzzdnede', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+      .then(function (res) {
+        if (res.ok) {
+          form.style.display = 'none';
+          success.classList.add('show');
+        } else {
+          return res.json().then(function (data) {
+            throw new Error(data.errors ? data.errors.map(function(e){ return e.message; }).join(', ') : 'Submission failed.');
+          });
+        }
+      })
+      .catch(function (err) {
+        btn.innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        btn.disabled = false;
+        var errBox = document.getElementById('formError');
+        if (!errBox) {
+          errBox = document.createElement('p');
+          errBox.id = 'formError';
+          errBox.style.cssText = 'color:#FF6B6B;font-size:0.875rem;margin-top:-8px;';
+          btn.parentNode.insertBefore(errBox, btn);
+        }
+        errBox.textContent = 'Something went wrong: ' + err.message + ' Please try WhatsApp instead.';
+      });
+    });
+  })();
+
+  // ── Project Modal ──
+  (function () {
+    var backdrop = document.getElementById('projectModal');
+    var modalImg  = document.getElementById('modalImg');
+    var modalTitle = document.getElementById('modalTitle');
+    var modalTag   = document.getElementById('modalTag');
+    var modalDesc  = document.getElementById('modalDesc');
+    var closeBtn   = document.getElementById('modalClose');
+
+    function openModal(btn) {
+      modalImg.src        = btn.dataset.modalImg;
+      modalImg.alt        = btn.dataset.modalTitle + ' project screenshot';
+      modalTitle.textContent = btn.dataset.modalTitle;
+      modalTag.textContent   = btn.dataset.modalTag;
+      modalTag.setAttribute('style', btn.dataset.modalTagStyle);
+      modalDesc.textContent  = btn.dataset.modalDesc;
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      backdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-modal-img]').forEach(function (btn) {
+      btn.addEventListener('click', function () { openModal(btn); });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+
+    backdrop.addEventListener('click', function (e) {
+      if (e.target === backdrop) closeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
+    });
+  })();
+
+  // ── Theme Toggle ──
+  (function () {
+    var html   = document.documentElement;
+    var btn    = document.getElementById('themeToggle');
+    var DARK   = 'dark';
+    var LIGHT  = 'light';
+    var stored = localStorage.getItem('nexcode-theme');
+    var system = window.matchMedia('(prefers-color-scheme: light)').matches ? LIGHT : DARK;
+    var theme  = stored || system;
+
+    function apply(t) {
+      if (t === LIGHT) {
+        html.setAttribute('data-theme', LIGHT);
+        btn.setAttribute('aria-label', 'Switch to dark mode');
+      } else {
+        html.removeAttribute('data-theme');
+        btn.setAttribute('aria-label', 'Switch to light mode');
+      }
+    }
+
+    apply(theme);
+
+    btn.addEventListener('click', function () {
+      var current = html.getAttribute('data-theme') === LIGHT ? LIGHT : DARK;
+      var next    = current === LIGHT ? DARK : LIGHT;
+      apply(next);
+      localStorage.setItem('nexcode-theme', next);
+    });
+  })();
+
+  // ── Smooth scroll polyfill for older browsers ──
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener('click', function (e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      var top = target.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
