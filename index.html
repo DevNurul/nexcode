@@ -1178,6 +1178,304 @@
       margin: 16px auto 0;
     }
     .section-divider.left { margin-left: 0; }
+
+    /* ════════════════════════════════════════
+       CHATBOT
+    ════════════════════════════════════════ */
+    .chat-float {
+      position: fixed;
+      bottom: 100px; left: 28px;
+      z-index: 9999;
+    }
+    .chat-btn {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px var(--accent-glow);
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      border: none;
+      cursor: pointer;
+    }
+    .chat-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(108,99,255,0.6); }
+    .chat-btn svg { width: 26px; height: 26px; }
+
+    .chat-pulse {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      animation: chatPulse 2s ease-out infinite;
+    }
+    .chat-pulse.hidden { display: none; }
+    @keyframes chatPulse {
+      0%   { transform: scale(0.9); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .chat-tooltip {
+      position: absolute;
+      left: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--transition);
+      color: var(--text);
+    }
+    .chat-tooltip::after {
+      content: '';
+      position: absolute;
+      right: 100%; top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-right-color: var(--border);
+    }
+    .chat-float:hover .chat-tooltip { opacity: 1; }
+
+    .chat-window {
+      position: fixed;
+      bottom: 170px; left: 28px;
+      width: 380px;
+      height: 520px;
+      background: #111118;
+      border: 1px solid #1E1E2E;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(108,99,255,0.15), 0 20px 60px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9998;
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+    }
+    .chat-window.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .chat-header {
+      background: var(--accent);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .chat-header-left { display: flex; align-items: center; gap: 10px; }
+    .chat-online-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px rgba(74,222,128,0.8);
+      animation: onlinePulse 2s ease infinite;
+      flex-shrink: 0;
+    }
+    @keyframes onlinePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .chat-header-info h3 {
+      font-family: var(--font-display);
+      font-size: 0.95rem; font-weight: 600;
+      color: #fff; line-height: 1.2;
+    }
+    .chat-header-info p { font-size: 0.75rem; color: rgba(255,255,255,0.75); }
+    .chat-close-btn {
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.15);
+      border: none; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition);
+      flex-shrink: 0;
+    }
+    .chat-close-btn:hover { background: rgba(255,255,255,0.28); }
+    .chat-close-btn svg { width: 16px; height: 16px; }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: #2a2a3e; border-radius: 999px; }
+
+    .chat-msg {
+      display: flex; flex-direction: column; gap: 4px;
+      max-width: 82%;
+    }
+    .chat-msg.bot { align-self: flex-start; align-items: flex-start; }
+    .chat-msg.user { align-self: flex-end; align-items: flex-end; }
+    .chat-msg-row { display: flex; align-items: flex-end; gap: 8px; }
+    .chat-msg.user .chat-msg-row { flex-direction: row-reverse; }
+
+    .chat-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(108,99,255,0.2);
+      border: 1px solid rgba(108,99,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.6rem; font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .chat-bubble {
+      padding: 10px 14px;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+    .chat-msg.bot .chat-bubble {
+      background: #1E1E2E; color: #F0F0F5;
+      border-radius: 4px 16px 16px 16px;
+    }
+    .chat-msg.user .chat-bubble {
+      background: var(--accent); color: #fff;
+      border-radius: 16px 4px 16px 16px;
+    }
+    .chat-timestamp { font-size: 0.7rem; color: #555566; padding: 0 4px; }
+
+    .chat-typing-dots {
+      display: flex; gap: 4px;
+      padding: 12px 16px;
+      background: #1E1E2E;
+      border-radius: 4px 16px 16px 16px;
+      width: fit-content;
+    }
+    .chat-typing-dots span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #8888AA;
+      animation: typingBounce 1.2s ease infinite;
+    }
+    .chat-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    .chat-chips {
+      display: flex; gap: 8px;
+      overflow-x: auto;
+      padding: 4px 0;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .chat-chips::-webkit-scrollbar { display: none; }
+    .chat-chip {
+      white-space: nowrap;
+      padding: 6px 14px;
+      border: 1px solid rgba(108,99,255,0.45);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      background: rgba(108,99,255,0.07);
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+      flex-shrink: 0;
+      font-family: var(--font-body);
+    }
+    .chat-chip:hover { background: rgba(108,99,255,0.18); border-color: var(--accent); }
+
+    .chat-input-area {
+      border-top: 1px solid #1E1E2E;
+      padding: 12px 14px 10px;
+      flex-shrink: 0;
+    }
+    .chat-input-row { display: flex; gap: 8px; align-items: flex-end; }
+    .chat-input {
+      flex: 1;
+      background: #0A0A0F;
+      border: 1px solid #1E1E2E;
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: #F0F0F5;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      resize: none; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      max-height: 100px; line-height: 1.5;
+    }
+    .chat-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.15); }
+    .chat-input::placeholder { color: #444456; }
+    .chat-send-btn {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--accent); border: none; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition), opacity var(--transition);
+      flex-shrink: 0;
+    }
+    .chat-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .chat-send-btn:not(:disabled):hover { background: #7d76ff; }
+    .chat-send-btn svg { width: 17px; height: 17px; }
+    .chat-powered { font-size: 0.68rem; color: #444456; text-align: center; margin-top: 7px; }
+
+    .wa-cta-card {
+      margin-top: 8px;
+      padding: 12px 16px;
+      background: rgba(37,211,102,0.08);
+      border: 1px solid rgba(37,211,102,0.25);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      max-width: 300px;
+    }
+    .wa-cta-card p {
+      font-size: 0.8rem;
+      color: #8888AA;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .wa-cta-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #25D366;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: background 0.2s ease;
+    }
+    .wa-cta-btn:hover { background: #1fba58; color: #fff; }
+    .wa-cta-btn svg { width: 14px; height: 14px; fill: #fff; }
+
+    @media (max-width: 480px) {
+      .chat-window {
+        bottom: 0; left: 0; right: 0;
+        width: 100%; height: 85vh;
+        border-radius: 16px 16px 0 0;
+      }
+      .chat-float { left: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -1928,6 +2226,55 @@
   <span class="wa-tooltip" aria-hidden="true">Chat on WhatsApp</span>
 </div>
 
+<!-- ══════════════════ CHATBOT ══════════════════ -->
+<div class="chat-float" id="chatFloat">
+  <button class="chat-btn" id="chatToggleBtn" aria-label="Open chat assistant" aria-expanded="false" aria-controls="chatWindow">
+    <span class="chat-pulse" id="chatPulse" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+  </button>
+  <span class="chat-tooltip" aria-hidden="true">Ask us anything</span>
+</div>
+
+<div class="chat-window" id="chatWindow" role="dialog" aria-modal="false" aria-label="Agency chat assistant">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <span class="chat-online-dot" aria-hidden="true"></span>
+      <div class="chat-header-info">
+        <h3>Agency Assistant</h3>
+        <p>Typically replies instantly</p>
+      </div>
+    </div>
+    <button class="chat-close-btn" id="chatCloseBtn" aria-label="Close chat">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M3 3l10 10M13 3L3 13"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Chat messages"></div>
+
+  <div class="chat-input-area">
+    <div class="chat-input-row">
+      <textarea
+        class="chat-input"
+        id="chatInput"
+        placeholder="Type your message…"
+        rows="1"
+        aria-label="Type a message"
+      ></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" aria-label="Send message" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <p class="chat-powered" aria-hidden="true">Powered by Gemini AI</p>
+  </div>
+</div>
+
 <!-- ══════════════════ JAVASCRIPT ══════════════════ -->
 <script>
   'use strict';
@@ -2176,6 +2523,379 @@
       apply(next);
       localStorage.setItem('nexcode-theme', next);
     });
+  })();
+
+  // ── Chatbot (Gemini AI) ──
+  (function () {
+
+    const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
+    const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=' + GEMINI_API_KEY;
+    const WA_LINK = 'https://wa.me/918100046648?text=Hi%2C%20I%27m%20interested%20in%20your%20web%20development%20services';
+    const MAX_TURNS = 10;
+
+    const SYSTEM_CONTEXT = [
+      'You are Nex, the official AI sales assistant for NexCode Technologies — a professional web development agency.',
+      'Your job is to confidently guide potential clients toward understanding our services, pricing, and process, and ultimately convert them into paying clients via WhatsApp.',
+      '',
+      'AGENCY OVERVIEW',
+      'Agency Name: NexCode Technologies',
+      'Specialty: Custom web development — from portfolio sites to full SaaS products',
+      'Stack: MERN (MongoDB, Express.js, React.js, Node.js)',
+      'Strengths: Performance-first builds, clean UI, fast delivery, end-to-end ownership',
+      '',
+      'SERVICES',
+      '1. Web Development — Custom websites, performance-first, responsive by default. Best for businesses and startups.',
+      '2. SaaS Applications — Full-featured software products from MVP to production-ready. Best for founders.',
+      '3. API Integration — Connect payment gateways, CRMs, analytics, and any external tools.',
+      '4. E-Commerce Stores — Fast checkout, secure payments, clean converting UI. Best for brands selling online.',
+      '5. Portfolio Websites — Personal sites that make you unforgettable. Best for designers, developers, freelancers.',
+      '6. Business Websites — Professional presence for serious brands. Best for local businesses, consultants, agencies.',
+      '',
+      'PRICING PLANS',
+      'STARTER — Rs.8,999',
+      '  Best for: Portfolio sites and business websites',
+      '  Includes: Up to 5 pages, mobile responsive design, contact form integration, SEO basics',
+      '  Delivery: 7 days',
+      '',
+      'GROWTH — Rs.24,999 (Most Popular)',
+      '  Best for: E-Commerce stores and SaaS MVPs',
+      '  Includes: Unlimited pages, payment gateway integration, admin dashboard, up to 3 API integrations, 30-day post-launch support',
+      '  Delivery: 14 days',
+      '',
+      "CUSTOM — Let's Talk",
+      '  Best for: Large, complex, or long-term projects',
+      '  Includes: Fully custom architecture, multi-platform delivery, dedicated project manager, unlimited API integrations, ongoing retainer available',
+      '  Delivery: Discussed based on scope',
+      '',
+      'TIMELINES',
+      '- Starter: 7 days',
+      '- Growth: 14 days',
+      '- Custom: Agreed upfront based on scope',
+      '- Timeline starts after all requirements and content are received from the client',
+      '',
+      'FAQs',
+      'Tech stack: MERN — MongoDB, Express.js, React.js, Node.js. Modern, scalable, ideal for MVPs and production apps.',
+      'Revisions: Yes, we work iteratively. Revisions are discussed based on project scope.',
+      'Post-launch support: Growth plan includes 30 days. Starter and Custom support discussed separately.',
+      'Payment gateways: Yes — Razorpay, Stripe, PayPal, and others depending on requirements.',
+      'Maintenance: Yes, ongoing retainer arrangements available for continued development and updates.',
+      'Mobile apps: We specialize in web-based solutions. React Native may be offered in future. Responsive web apps work beautifully on all devices.',
+      'International clients: Yes, we work globally. Payments and communication handled remotely.',
+      'Getting started: Reach out on WhatsApp — #https://wa.me/918100046648',
+      '',
+      'SERVICES NOT OFFERED',
+      "If asked about something outside our services (mobile apps, graphic design, SEO campaigns, video editing, etc.), respond warmly: \"That's not something we currently specialize in, but it's something we're actively exploring for the future. For now, if there's a web-based solution that could work for your needs, we'd love to help you find it. Feel free to reach out on WhatsApp and we can figure out the best approach together.\"",
+      "Never say we don't do that bluntly. Always offer a bridge or a future promise.",
+      '',
+      'WHATSAPP REDIRECT',
+      'WhatsApp Link: https://wa.me/918100046648',
+      "Send this link when: user asks how to hire us, asks for a custom quote, says they're ready to proceed, or has a question you cannot fully answer.",
+      'Format naturally, e.g.: "Ready to get started? Drop us a message on WhatsApp and we\'ll get back to you right away — https://wa.me/918100046648"',
+      '',
+      'TONE & BEHAVIOR RULES',
+      'Tone: Confident, sales-focused, professional. You represent a serious agency. Speak with authority but stay approachable.',
+      'DO: Answer directly and confidently. Recommend the right plan based on what the user describes. Highlight value. Use the WhatsApp link naturally when the user is ready. Keep replies concise (2-5 sentences max unless a detailed breakdown is needed). Use bullet points when listing features.',
+      'DO NOT: Offer discounts or negotiate pricing. Make up services, features, or prices not listed above. Be vague. Talk about competitors. Respond to anything unrelated to NexCode or web development. Give long essay-style replies for simple questions.',
+      '',
+      'FEW-SHOT EXAMPLES',
+      '',
+      'User: "How much does a website cost?"',
+      'Nex: "Our Starter plan is Rs.8,999 — perfect for portfolio and business websites up to 5 pages, delivered in 7 days. If you need an e-commerce store or a SaaS product, our Growth plan starts at Rs.24,999 with a 14-day turnaround. For larger projects, we offer custom pricing. What kind of website are you looking to build?"',
+      '',
+      'User: "I want to sell products online"',
+      'Nex: "Perfect — that\'s exactly what our Growth plan is built for. At Rs.24,999, you get a full e-commerce store with payment gateway integration, admin dashboard, and 30 days of post-launch support. Delivered in 14 days. Want to get started? https://wa.me/918100046648"',
+      '',
+      'User: "What technologies do you use?"',
+      'Nex: "We build on the MERN stack — MongoDB, Express.js, React.js, and Node.js. It\'s fast, scalable, and ideal for everything from simple business sites to complex SaaS products."',
+      '',
+      'User: "Can you build an app?"',
+      'Nex: "We currently specialize in web-based solutions, which work beautifully across all devices including mobile. Native mobile app development is something we\'re exploring for the future. If a web app could work for your needs, we\'d love to help — https://wa.me/918100046648"',
+      '',
+      'User: "How long will my project take?"',
+      'Nex: "Starter projects are delivered in 7 days, Growth projects in 14 days. For custom builds, we agree on a timeline upfront before work begins. Timeline kicks off once we have all your requirements and content ready."',
+      '',
+      'UNCERTAINTY FLAG',
+      'If you are not confident about an answer, or the question is outside your knowledge about NexCode Technologies, do NOT guess or make up an answer.',
+      'Instead, always end your reply with exactly this flag on its own line and nothing after it:',
+      '##SHOW_WHATSAPP_CTA##',
+      'This flag tells the UI to show a WhatsApp redirect button below your message. Only use it when genuinely uncertain — do not add it to normal confident replies.'
+    ].join('\n');
+
+    const QUICK_REPLIES = [
+      'What services do you offer?',
+      'Tell me about pricing',
+      'How long does a project take?',
+      'Do you offer support?'
+    ];
+
+    var isOpen = false;
+    var hasOpenedOnce = false;
+    var isWaiting = false;
+    var conversationHistory = [];
+
+    var chatFloat  = document.getElementById('chatFloat');
+    var toggleBtn  = document.getElementById('chatToggleBtn');
+    var chatWindow = document.getElementById('chatWindow');
+    var closeBtn   = document.getElementById('chatCloseBtn');
+    var messagesEl = document.getElementById('chatMessages');
+    var inputEl    = document.getElementById('chatInput');
+    var sendBtn    = document.getElementById('chatSendBtn');
+    var pulseEl    = document.getElementById('chatPulse');
+
+    function getTime() {
+      var d = new Date();
+      return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+    }
+
+    function scrollToBottom() {
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function buildWaCta() {
+      var card = document.createElement('div');
+      card.className = 'wa-cta-card';
+
+      var p = document.createElement('p');
+      p.textContent = '🤝 Our team can answer this personally.';
+      card.appendChild(p);
+
+      var a = document.createElement('a');
+      a.href = 'https://wa.me/918100046648?text=Hi%20NexCode%2C%20I%20have%20a%20question';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'wa-cta-btn';
+      a.setAttribute('aria-label', 'Chat with us on WhatsApp');
+      a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Chat on WhatsApp';
+      card.appendChild(a);
+
+      return card;
+    }
+
+    function appendMessage(role, text, showWhatsApp) {
+      var isBot = role === 'bot';
+      var wrapper = document.createElement('div');
+      wrapper.className = 'chat-msg ' + (isBot ? 'bot' : 'user');
+
+      var row = document.createElement('div');
+      row.className = 'chat-msg-row';
+
+      if (isBot) {
+        var avatar = document.createElement('div');
+        avatar.className = 'chat-avatar';
+        avatar.textContent = 'NC';
+        avatar.setAttribute('aria-hidden', 'true');
+        row.appendChild(avatar);
+      }
+
+      var bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.textContent = text;
+      row.appendChild(bubble);
+
+      var ts = document.createElement('span');
+      ts.className = 'chat-timestamp';
+      ts.textContent = getTime();
+
+      wrapper.appendChild(row);
+      wrapper.appendChild(ts);
+
+      if (isBot && showWhatsApp) {
+        wrapper.appendChild(buildWaCta());
+      }
+
+      messagesEl.appendChild(wrapper);
+      scrollToBottom();
+      return wrapper;
+    }
+
+    function showTypingIndicator() {
+      var wrapper = document.createElement('div');
+      wrapper.className = 'chat-msg bot';
+      wrapper.id = 'chatTyping';
+
+      var row = document.createElement('div');
+      row.className = 'chat-msg-row';
+
+      var avatar = document.createElement('div');
+      avatar.className = 'chat-avatar';
+      avatar.textContent = 'NC';
+      avatar.setAttribute('aria-hidden', 'true');
+      row.appendChild(avatar);
+
+      var dots = document.createElement('div');
+      dots.className = 'chat-typing-dots';
+      dots.setAttribute('aria-label', 'Assistant is typing');
+      dots.innerHTML = '<span></span><span></span><span></span>';
+      row.appendChild(dots);
+
+      wrapper.appendChild(row);
+      messagesEl.appendChild(wrapper);
+      scrollToBottom();
+    }
+
+    function removeTypingIndicator() {
+      var el = document.getElementById('chatTyping');
+      if (el) el.remove();
+    }
+
+    function showFallback() {
+      appendMessage('bot', "I'm having trouble connecting right now. Our team can help you directly!", true);
+    }
+
+    function renderWelcome() {
+      appendMessage('bot', "Hi there! 👋 I'm the agency assistant. I can help you with information about our services, pricing, and timelines. What would you like to know?");
+
+      var chipsWrapper = document.createElement('div');
+      chipsWrapper.className = 'chat-msg bot';
+      chipsWrapper.style.maxWidth = '100%';
+      var chipsRow = document.createElement('div');
+      chipsRow.className = 'chat-chips';
+
+      QUICK_REPLIES.forEach(function (label) {
+        var chip = document.createElement('button');
+        chip.className = 'chat-chip';
+        chip.textContent = label;
+        chip.addEventListener('click', function () {
+          chipsWrapper.remove();
+          sendUserMessage(label);
+        });
+        chipsRow.appendChild(chip);
+      });
+
+      chipsWrapper.appendChild(chipsRow);
+      messagesEl.appendChild(chipsWrapper);
+      scrollToBottom();
+    }
+
+    var WA_FLAG = '##SHOW_WHATSAPP_CTA##';
+
+    function processReply(rawText) {
+      var hasFlag = rawText.includes(WA_FLAG);
+      var cleanText = rawText.replace(WA_FLAG, '').trim();
+      var showWhatsApp = hasFlag || cleanText.length < 10;
+      return { text: cleanText, showWhatsApp: showWhatsApp };
+    }
+
+    async function callGemini(userMessage) {
+      conversationHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+
+      var recentHistory = conversationHistory.slice(-MAX_TURNS * 2);
+
+      var requestBody = {
+        systemInstruction: { parts: [{ text: SYSTEM_CONTEXT }] },
+        contents: recentHistory,
+        generationConfig: { temperature: 0.7, maxOutputTokens: 400 }
+      };
+
+      try {
+        var response = await fetch(GEMINI_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody)
+        });
+
+        var data = await response.json();
+
+        if (
+          !data.candidates ||
+          !data.candidates[0] ||
+          !data.candidates[0].content ||
+          !data.candidates[0].content.parts ||
+          !data.candidates[0].content.parts[0]
+        ) {
+          console.error('Unexpected Gemini response:', data);
+          return null;
+        }
+
+        var botReply = data.candidates[0].content.parts[0].text;
+
+        conversationHistory.push({ role: 'model', parts: [{ text: botReply }] });
+
+        if (conversationHistory.length > MAX_TURNS * 2) {
+          conversationHistory = conversationHistory.slice(-MAX_TURNS * 2);
+        }
+
+        return botReply;
+      } catch (err) {
+        console.error('Gemini API error:', err);
+        return null;
+      }
+    }
+
+    async function sendUserMessage(text) {
+      if (isWaiting || !text.trim()) return;
+
+      isWaiting = true;
+      inputEl.disabled = true;
+      sendBtn.disabled = true;
+      inputEl.value = '';
+      inputEl.style.height = 'auto';
+
+      appendMessage('user', text);
+      showTypingIndicator();
+
+      var rawReply = await callGemini(text);
+      removeTypingIndicator();
+
+      if (rawReply) {
+        var processed = processReply(rawReply);
+        appendMessage('bot', processed.text, processed.showWhatsApp);
+      } else {
+        showFallback();
+      }
+
+      isWaiting = false;
+      inputEl.disabled = false;
+      sendBtn.disabled = !inputEl.value.trim();
+      inputEl.focus();
+    }
+
+    function openChat() {
+      isOpen = true;
+      chatWindow.classList.add('open');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      inputEl.focus();
+
+      if (!hasOpenedOnce) {
+        hasOpenedOnce = true;
+        pulseEl.classList.add('hidden');
+        renderWelcome();
+      }
+    }
+
+    function closeChat() {
+      isOpen = false;
+      chatWindow.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    toggleBtn.addEventListener('click', function () {
+      if (isOpen) { closeChat(); } else { openChat(); }
+    });
+
+    closeBtn.addEventListener('click', closeChat);
+
+    inputEl.addEventListener('input', function () {
+      sendBtn.disabled = !inputEl.value.trim();
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 100) + 'px';
+    });
+
+    inputEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!sendBtn.disabled) sendUserMessage(inputEl.value.trim());
+      }
+    });
+
+    sendBtn.addEventListener('click', function () {
+      sendUserMessage(inputEl.value.trim());
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) closeChat();
+    });
+
   })();
 
   // ── Smooth scroll polyfill for older browsers ──
